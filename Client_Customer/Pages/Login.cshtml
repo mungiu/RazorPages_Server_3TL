@@ -1,0 +1,186 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+
+
+<!--<body class="loginBody">
+    <div class="wrapperB">
+        <div class="background">
+            <div class="left">
+                <h2 class="back-header">Not a member but still want to have something shipped or ship it?</h2>
+                <p class="back-p">Well, sign up then</p>
+                <button class="back-btn signup-but">SIGN UP</button>
+            </div>
+            <div class="right">
+                <h2 class="back-header">Do you already have an account?</h2>
+                <p class="back-p">Well logg in and see what's new!</p>
+                <button class="back-btn login-but">LOGIN</button>
+            </div>
+        </div>
+        <div class="form-container">
+            <div class="sign-up">
+                <h2 class="form-header">SIGN UP</h2>
+                <input type="text" id="user" placeholder="Enter Full Name"><i class="fa fa-user"></i>
+                <input type="text" id="email" placeholder="Email"><i class="fa fa-envelope-o"></i>
+                <input type="password" id="pass" placeholder="Password"><i class="fa fa-lock"></i>
+                <button class="form-btn">SIGN UP</button>
+            </div>
+            <div class="login hide">
+                <h2 class="form-header">LOGIN</h2>
+                <input type="text" id="email" placeholder="Email"><i class="fa fa-envelope-o"></i>
+                <input type="password" id="pass" placeholder="Password"><i class="fa fa-lock"></i>
+                <button class="form-btn">LOGIN</button>
+                <a class="forgot" href="#">Forgot password</a>
+
+            </div>
+        </div>
+    </div>
+</body>-->
+
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+    </head>
+    <body class="loginBody">
+        <div class="wrapperB">
+            <div class="background ">
+                <div class="left">
+                    <h2 class="back-header">Dont have an account yet?</h2>
+                    <p class="back-p">jj jns bla bla blaajajdjdndy!</p>
+                    <button class="back-btn signup-but">SIGN UP</button>
+                </div>
+                <div class="right">
+                    <h2 class="back-header">Do you already have an account?</h2>
+                    <p class="back-p">jdd nldjkdn ankdka dis aofnsknd ajdnm!</p>
+                    <button class="back-btn login-but">LOGIN</button>
+                </div>
+            </div>
+            <div class="form-container">
+                <div class="sign-up">
+                    <h2 class="form-header text-center">SIGN UP</h2>
+
+                    <form asp-page="SignUp" method="post">
+                        <div class="input-group ">
+                            <span class="input-group-addon">
+                                <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
+                            </span>
+                            <input asp-for="Client.email" class="form-control" placeholder="email" />
+                        </div>
+                        <div class="input-group ">
+                            <span class="input-group-addon">
+                                <span><i aria-hidden="true" class="fa fa-lock"></i></span>
+                            </span>
+                            <input asp-for="Client.passwordHashW" class="form-control" placeholder="password" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                            </span>
+                            <input asp-for="Client.clientID" class="form-control" placeholder="ID" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                            </span>
+                            <input asp-for="Client.companyName" class="form-control" placeholder="Name of the company" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span><i aria-hidden="true" class="fa fa-phone"></i></span>
+                            </span>
+                            <input asp-for="Client.telephoneNumber" class="form-control" placeholder="Phone number" />
+                        </div>
+                        <div class="input-group ">
+                            <span class="input-group-addon">
+                                <span><i aria-hidden="true" class="fa fa-lock"></i></span>
+                            </span>
+                            <select asp-for="Client.clientType" class="form-control" placeholder="Select your type of business">
+                                <option value="Big business"> Big business</option>
+                                <option value="Small business">Small business</option>
+                            </select>
+
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span><i aria-hidden="true" class="fa fa-home"></i></span>
+                            </span>
+                            <input asp-for="Client.address.street" class="form-control" placeholder="Streen and Street no" />
+                        </div>
+
+
+                        <!-- <div class="input-group">
+                        <span class="input-group-addon">
+                            <span><i aria-hidden="true" class="fa fa-home"></i></span>
+                        </span>
+
+                        <input asp-for="Client.address.street" class="form-control" placeholder="Horsensvej 2" />
+                    </div>-->
+
+
+
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span><i aria-hidden="true" class="fa fa-home"></i></span>
+                            </span>
+
+                            <input asp-for="Client.address.city" class="form-control" placeholder="City" />
+
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span><i aria-hidden="true" class="fa fa-home"></i></span>
+                                    </span>
+                                    <input asp-for="Client.address.zipCode" class="form-control" placeholder="Postcode" />
+                                </div>
+                            </div>
+                            <div class="form-group   col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span><i aria-hidden="true" class="fa fa-home"></i></span>
+                                    </span>
+                                    <input asp-for="Client.address.country" class="form-control" placeholder="State" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <button type="submit" class="btn btn-outline btn-danger btn-block" id="place-order-btn">Sign up</button>
+                    </form>
+                </div>
+
+
+                <div class="login hide">
+                    <h2 class="form-header text-center">LOGIN</h2>
+                    <form asp-page="SignUp" method="post">
+                        <div class="input-group ">
+                            <span class="input-group-addon">
+                                <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
+                            </span>
+                            <input asp-for="Client.email" class="form-control" placeholder="email" />
+                        </div>
+                        <div class="input-group ">
+                            <span class="input-group-addon">
+                                <span><i aria-hidden="true" class="fa fa-lock"></i></span>
+                            </span>
+                            <input asp-for="Client.passwordHashW" class="form-control" placeholder="password" />
+                        </div>
+                        <hr />
+                        <button type="submit" class="btn btn-outline btn-danger btn-block " id="place-order-btn">Log in</button>
+                    </form>
+
+
+
+
+                    <a class="forgot" href="#">Forgot password</a>
+
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>

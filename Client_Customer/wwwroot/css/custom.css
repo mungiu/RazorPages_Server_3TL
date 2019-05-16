@@ -1,0 +1,223 @@
+﻿/*navbar*/
+body {
+    font-family: "Lato", sans-serif;
+    transition: background-color .5s;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: #7386D5;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 1.5em;
+        color: #fff;
+        display: block;
+        transition: 0.3s;
+        text-align: left;
+    }
+
+        .sidenav a:hover {
+            color: #7386D5;
+            background: #fff;
+        }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+    }
+
+        .sidenav .closebtn:hover {
+            background-color: #7386D5 !important;
+            color: black;
+        }
+
+.sub-list-unstyled {
+    padding: 15px 10px;
+    font-size: 0.8em;
+    list-style: none;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+}
+
+
+/*login*/
+.loginBody {
+    background: url(http://eskipaper.com/images/mountain-landscape-2.jpg);
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.wrapperB {
+    background: rgba(0,0,0,0.6);
+    position:relative;
+    width: 56vw;
+    height: 80vh;
+    margin: 0 auto;
+    margin-top: 4vw;
+    border: solid 4px white;
+}
+
+.left,
+.right {
+    width: 50%;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right
+}
+
+
+
+.back-header,
+.back-p {
+    margin: 1vw;
+    color: #fafafa;
+    letter-spacing: 1px;
+}
+
+.back-header {
+    font-family: 'Ubuntu';
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.back-p {
+    font-family: 'PT Sans';
+    letter-spacing: 1px;
+    font-size: 20px;
+    line-height: 30px;
+    margin-right: 60px;
+}
+
+.background button {
+    position: absolute;
+    left: 0;
+    bottom: 60px;
+}
+
+.background .left button {
+    left: 20px;
+}
+
+.background .right button {
+    left: 420px;
+}
+
+.form-container {
+    position: absolute;
+    width: 25vw;
+    height:90vh;
+    top: -25px;
+    left:10px;
+    background-color: white;
+    border-top: 5px solid #f5ba1a;
+    box-shadow: 9px 13px 16px 0px rgba(0,0,0,0.75);
+}
+.back-btn {
+    width: 100px;
+    height: 30px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 3px;
+    background: transparent;
+    border: 1px solid white;
+    color: #fafafa;
+    transition: .3s all;
+}
+
+    .back-btn:hover {
+        background-color: #145977;
+        border: 1px solid #145977;
+    }
+.sign-up,
+.login {
+    margin: 2vw;
+}
+
+.form-header {
+    font-size: 2vw;
+    color: #FC7D5F;
+    margin-bottom: 2vw;
+}
+
+.form-container input {
+    width: 70%;
+}
+
+.input-group {
+    margin-bottom: 1vw;
+}
+
+
+.form-container i {
+   
+    margin-bottom: -5px;
+    color: #888;
+}
+
+.login button,
+.forgot {
+    display: inline-block;
+}
+
+.forgot {
+    text-decoration: none;
+    color: black;
+}
+
+    .forgot:hover {
+        color: #FC7D5F;
+        text-decoration: underline;
+    }
+
+}
+
+/*layout*/
+
+
+/*
+.body-content {
+    background-color:#f1f1f1;
+    
+}*/
+
+#details-page-wrapper {
+    background-color: white !important;
+}
