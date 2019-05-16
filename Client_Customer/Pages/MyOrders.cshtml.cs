@@ -19,21 +19,17 @@ namespace Client_Customer.Pages
 
         public void OnGet()
         {
-            targetUri = new Uri("http://localhost:8080/server_war_exploded/root/api/orders"/* insert RESTful URL to GET User related orders, includes current user ID*/);
+            string currentUserID = null;
+
+            foreach (var claim in User.Claims)
+            {
+                if (claim.Type.Equals("sub"))
+                    currentUserID = claim.Value;
+            }
+
             orderService = new OrderService();
+            targetUri = new Uri("http://localhost:8080/server_war_exploded/root/api/myorders/" + currentUserID);
             orderList = Task.Run(() => orderService.GetOrderListAsync(targetUri)).Result;
-
-
-            var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
-
-            //// FOR DEBUG PURPOSE
-            //// writing it out
-            //Debug.WriteLine($"Identity token: {identityToken}");
-            //// writing out user claims
-            //foreach (var claim in User.Claims)
-            //{
-            //    Debug.WriteLine($"Claim type: {claim.Type} - Claim value: {claim.Value}");
-            //}
         }
     }
 }

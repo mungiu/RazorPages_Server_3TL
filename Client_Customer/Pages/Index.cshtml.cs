@@ -29,11 +29,8 @@ namespace Client_Customer.Pages
             orderList = Task.Run(() => orderService.GetOrderListAsync(targetUri)).Result;
 
 
-            // getting saved identity token
-            var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
-            
-            
-            //// FOR DEBUG PURPOSE
+            //// FOR DEBUG PURPOSE getting saved identity token
+            //var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
             //Debug.WriteLine($"Identity token: {identityToken}");
             //// writing out user claims
             //foreach(var claim in User.Claims)

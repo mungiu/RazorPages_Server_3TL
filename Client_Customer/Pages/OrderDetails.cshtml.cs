@@ -23,8 +23,8 @@ namespace Client_Customer.Pages
 
         public void OnGet(string orderNumber)
         {
-            // getting saved identity token
-            var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
+            //// getting saved identity token
+            //var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
 
             // writing out user claims
             foreach (var claim in User.Claims)
@@ -43,8 +43,8 @@ namespace Client_Customer.Pages
         {
             string currentUserID = null;
 
-            // getting saved identity token
-            var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
+            //// getting saved identity token
+            //var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
 
             // writing out user claims
             foreach (var claim in User.Claims)
@@ -67,8 +67,8 @@ namespace Client_Customer.Pages
             /// TODO: REQUIRES REAL URL
             string currentUserID = null;
 
-            // getting saved identity token
-            var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
+            //// getting saved identity token
+            //var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
 
             // writing out user claims
             foreach (var claim in User.Claims)

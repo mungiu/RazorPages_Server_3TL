@@ -17,19 +17,14 @@ namespace Client_Customer.Pages
 
         [BindProperty]
         public Order Order { get; set; }
-
-        //public string PickUpAddress { get; set; }
-        //public DateTime PickUpDeadline { get; set; }
-        //public string DropOffAddress { get; set; }
-        //public DateTime DropOffDeadline { get; set; }
-        //public string PackageContentDescription { get; set; }
-        //public string ContainerSize { get; set; }
-        //public int PackageWeight { get; set; }
-
         public void OnPost()
         {
-            // TODO: make real value and not hardcoded value
-            Order.companyID = "1111";
+            foreach (var claim in User.Claims)
+            {
+                if (claim.Type.Equals("sub"))
+                    Order.companyID = claim.Value;
+            }
+
             targetUrl = "http://localhost:8080/server_war_exploded/root/api/order";
             orderService = new OrderService();
             Task<string> response = orderService.PostNewOrderAsync(Order, targetUrl);
