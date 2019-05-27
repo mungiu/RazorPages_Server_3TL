@@ -18,8 +18,8 @@ namespace Client_Customer.Pages
     [Authorize]
     public class IndexModel : PageModel
     {
-        OrderService orderService;
-        Uri targetUri;
+        private OrderService orderService;
+        private Uri targetUri;
         public OrderList orderList;
 
         public void OnGet()

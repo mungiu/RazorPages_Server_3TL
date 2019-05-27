@@ -12,8 +12,8 @@ namespace Client_Customer.Pages
 {
     public class CreateOrderModel : PageModel
     {
-        OrderService orderService;
-        string targetUrl;
+        private OrderService orderService;
+        private string targetUrl;
 
         [BindProperty]
         public Order Order { get; set; }

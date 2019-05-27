@@ -17,6 +17,6 @@ namespace Client_Customer.Services
 
         Task<string> PutUpdatedOrderAsync(Order updatedOrder, string Url);
 
-        Task<string> PutAssignedContractorToOrderAsync(string orderID, string contractorID, string targetUrl);
+        Task<string> PostAssignedContractorToOrderAsync(string orderID, string contractorID, string targetUrl);
     }
 }

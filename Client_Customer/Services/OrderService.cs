@@ -81,7 +81,6 @@ namespace Client_Customer.Services
 
         public async Task<string> PutUpdatedOrderAsync(Order updatedOrder, string Url)
         {
-            // Serializing the object into JSON
             JsonSerializer jsonSerializer = new JsonSerializer();
             string orderAsJSON = JsonConvert.SerializeObject(updatedOrder, new JsonSerializerSettings
             {
@@ -92,20 +91,44 @@ namespace Client_Customer.Services
 
             StringContent jsonAsHttpContent = new StringContent(orderAsJSON, Encoding.UTF8, "application/json");
 
-            string response = await PostJsonToUrlAsync(Url, jsonAsHttpContent);
-
+            string response = await PutJsonToUrlAsync(Url, jsonAsHttpContent);
             return response;
         }
 
-        public async Task<string> PutAssignedContractorToOrderAsync(string orderID, string companyID, string targetUrl)
+        public async Task<string> PostUpdateOrderTrackingAsync(string orderNumber, string companyID, string updateType, string urlUpdateOrderTracking)
+        {
+            string jsonData = $"{{'orderNumber': {orderNumber}, 'companyId': {companyID}, 'updateType': {updateType}}}";
+            StringContent jsonAsHttpContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            string response = await PostJsonToUrlAsync(urlUpdateOrderTracking, jsonAsHttpContent);
+            return response;
+        }
+
+        public async Task<string> PostAssignedContractorToOrderAsync(string orderNumber, string companyID, string targetUrl)
         {
             // "{{" = "{" but is used for escaping character bacause f "$"
-            string jsonData = $"{{'orderNumber': {orderID}, 'companyId': {companyID}}}";
+            string jsonData = $"{{'orderNumber': {orderNumber}, 'companyId': {companyID}}}";
             StringContent jsonAsHttpContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
 
             string response = await PostJsonToUrlAsync(targetUrl, jsonAsHttpContent);
             return response;
+        }
+
+        public async Task<string> PutJsonToUrlAsync(string Url, StringContent jsonAsHttpContent)
+        {
+            string httpResponseAsString = null;
+            // Sending the JSON and getting status response
+            using (HttpClient httpClient = new HttpClient())
+            {
+                HttpResponseMessage httpResponse = await httpClient.PutAsync(Url, jsonAsHttpContent);
+                httpResponseAsString = httpResponse.StatusCode.ToString();
+            }
+
+            if (httpResponseAsString == null)
+                return "Server did not reply";
+            else
+                return httpResponseAsString;
         }
 
         public async Task<string> PostJsonToUrlAsync(string Url, StringContent jsonAsHttpContent)
@@ -124,6 +147,37 @@ namespace Client_Customer.Services
                 return httpResponseAsString;
         }
 
+        public async Task<string> DeleteCancelOrderAsContractorAsync(string urlCancelAsContractor)
+        {
+            string httpResponseAsString = null;
+            // Sending the JSON and getting status response
+            using (HttpClient httpClient = new HttpClient())
+            {
+                HttpResponseMessage httpResponse = await httpClient.DeleteAsync(urlCancelAsContractor);
+                httpResponseAsString = httpResponse.StatusCode.ToString();
+            }
+
+            if (httpResponseAsString == null)
+                return "Server did not reply";
+            else
+                return httpResponseAsString;
+        }
+
+        public async Task<string> DeleteOrderAsync(string deleteOrderUrl)
+        {
+            string httpResponseAsString = null;
+            // Sending the JSON and getting status response
+            using (HttpClient httpClient = new HttpClient())
+            {
+                HttpResponseMessage httpResponse = await httpClient.DeleteAsync(deleteOrderUrl);
+                httpResponseAsString = httpResponse.StatusCode.ToString();
+            }
+
+            if (httpResponseAsString == null)
+                return "Server did not reply";
+            else
+                return httpResponseAsString;
+        }
         //public async Task<string> PutJsonToUrlAsync(string Url, StringContent jsonAsHttpContent)
         //{
         //    string httpResponseAsString = null;

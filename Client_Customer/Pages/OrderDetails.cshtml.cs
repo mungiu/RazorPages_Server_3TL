@@ -14,76 +14,124 @@ namespace Client_Customer.Pages
     public class OrderDetailsModel : PageModel
     {
         private OrderService orderService;
-        private string targetUrlGetOrder;
-        private string targetUrlTakeOrder;
-        private string targetUrlLateDelivery;
-        private Uri targetUriGetOrder;
-        public Order orderModel;
+        private string urlGetOrder;
+        private string urlTakeOrder;
+        private string targetUrlPickedUpOrder;
+        private string targetUrlDeliveredOrder;
+        private string urlUpdateOrderTracking;
+        private string updateType;
+        private Uri UriGetOrder;
+        public Order Order { get; set; }
+        public string currentUserID;
         public string clientType;
 
         public void OnGet(string orderNumber)
         {
             //// getting saved identity token
             //var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
+            UpdateUserClaimsFromIdentityServer4();
 
-            // writing out user claims
-            foreach (var claim in User.Claims)
-            {
-                if (claim.Type.Equals("role"))
-                    clientType = claim.Value;
-            }
-
-            targetUrlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
-            targetUriGetOrder = new Uri(new Uri(targetUrlGetOrder), orderNumber);
+            urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
+            UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
             orderService = new OrderService();
-            orderModel = Task.Run(() => orderService.GetOrderByOrderNumberAsync(targetUriGetOrder)).Result;
+            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
         }
 
         public void OnPostTakeOrder(string orderNumber)
         {
-            string currentUserID = null;
-
-            //// getting saved identity token
-            //var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
-
-            // writing out user claims
-            foreach (var claim in User.Claims)
-            {
-                if (claim.Type.Equals("sub"))
-                    currentUserID = claim.Value;
-            }
-
-            targetUrlTakeOrder = "http://localhost:8080/server_war_exploded/root/api/acceptorder/";
             orderService = new OrderService();
-            Task<string> response = orderService.PutAssignedContractorToOrderAsync(orderNumber, currentUserID, targetUrlTakeOrder);
+            UpdateUserClaimsFromIdentityServer4();
 
-            targetUrlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
-            targetUriGetOrder = new Uri(new Uri(targetUrlGetOrder), orderNumber);
-            orderModel = Task.Run(() => orderService.GetOrderByOrderNumberAsync(targetUriGetOrder)).Result;
+            urlTakeOrder = "http://localhost:8080/server_war_exploded/root/api/acceptorder/";
+            Task<string> response = orderService.PostAssignedContractorToOrderAsync(orderNumber, currentUserID, urlTakeOrder);
+
+            urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
+            UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
+            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
         }
 
         public void OnPostLateOrder(string orderNumber)
         {
-            /// TODO: REQUIRES REAL URL
-            string currentUserID = null;
+            orderService = new OrderService();
+            updateType = "lateOrder";
+            UpdateUserClaimsFromIdentityServer4();
 
-            //// getting saved identity token
-            //var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
+            urlUpdateOrderTracking = "http://localhost:8080/server_war_exploded/root/api/updatestatus";
+            Task<string> response = orderService.PostUpdateOrderTrackingAsync(orderNumber, currentUserID, updateType, urlUpdateOrderTracking);
 
-            // writing out user claims
+            urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
+            UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
+            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
+        }
+
+        public void OnDeleteCancelOrderAsContractor(string orderNumber)
+        {
+            orderService = new OrderService();
+            UpdateUserClaimsFromIdentityServer4();
+
+            string urlCancelAsContractor = "http://localhost:8080/server_war_exploded/root/api/cancelorder/" + orderNumber;
+            Task<string> response = orderService.DeleteCancelOrderAsContractorAsync(urlCancelAsContractor);
+
+            urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
+            UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
+            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
+        }
+
+        public void OnDeleteOrderAsCustomer(string orderNumber)
+        {
+            orderService = new OrderService();
+            UpdateUserClaimsFromIdentityServer4();
+
+            string deleteOrderUrl = "http://localhost:8080/server_war_exploded/root/api/order/" + orderNumber;
+            Task<string> response = orderService.DeleteOrderAsync(deleteOrderUrl);
+
+            urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
+            UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
+            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
+        }
+
+        public void OnPostPickedUp(string orderNumber)
+        {
+            orderService = new OrderService();
+            updateType = "orderPickedUp";
+            UpdateUserClaimsFromIdentityServer4();
+
+            SetUpdateOrderTrackingUrl();
+            Task<string> response = orderService.PostUpdateOrderTrackingAsync(orderNumber, currentUserID, updateType, urlUpdateOrderTracking);
+
+            urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
+            UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
+            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
+        }
+
+        public void OnPostDelivered(string orderNumber)
+        {
+            orderService = new OrderService();
+            updateType = "orderDelivered";
+            UpdateUserClaimsFromIdentityServer4();
+
+            SetUpdateOrderTrackingUrl();
+            Task<string> response = orderService.PostUpdateOrderTrackingAsync(orderNumber, currentUserID, updateType, urlUpdateOrderTracking);
+
+            urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
+            UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
+            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
+        }
+
+        public void UpdateUserClaimsFromIdentityServer4()
+        {
             foreach (var claim in User.Claims)
             {
                 if (claim.Type.Equals("sub"))
                     currentUserID = claim.Value;
+                if (claim.Type.Equals("role"))
+                    clientType = claim.Value;
             }
+        }
 
-            targetUrlLateDelivery = "http://localhost:8080/server_war_exploded/root/api/lateDelivery/";
-            orderService = new OrderService();
-            Task<string> response = orderService.PutAssignedContractorToOrderAsync(orderNumber, currentUserID, targetUrlLateDelivery);
-
-            targetUrlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
-            targetUriGetOrder = new Uri(new Uri(targetUrlGetOrder), orderNumber);
-            orderModel = Task.Run(() => orderService.GetOrderByOrderNumberAsync(targetUriGetOrder)).Result;
+        public void SetUpdateOrderTrackingUrl()
+        {
+            urlUpdateOrderTracking = "http://localhost:8080/server_war_exploded/root/api/updatestatus";
         }
     }
 }

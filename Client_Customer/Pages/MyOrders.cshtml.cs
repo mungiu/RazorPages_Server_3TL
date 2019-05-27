@@ -13,8 +13,8 @@ namespace Client_Customer.Pages
 {
     public class MyOrdersModel : PageModel
     {
-        OrderService orderService;
-        Uri targetUri;
+        private OrderService orderService;
+        private Uri targetUri;
         public OrderList orderList;
 
         public void OnGet()

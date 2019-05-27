@@ -3,131 +3,164 @@
 @{
     ViewData["Title"] = "Order Details";
     ViewData["Message"] = "Details about the selected order";
-    bool orderAwaitingPickUp = Model.orderModel.awaitingPickUp;
-    bool orderPickedUp = Model.orderModel.pickedUp;
-    bool orderNotDelivered = !Model.orderModel.delivered;
-    bool contractorClient = Model.clientType == "contractor";
+    bool orderAwaitingPickUp = Model.Order.awaitingPickUp;
+    bool orderPickedUp = Model.Order.pickedUp;
+    bool orderNotDelivered = !Model.Order.delivered;
+    bool contractorClient = Model.clientType.Equals("contractor");
+    bool customerClient = Model.clientType.Equals("customer");
+
+    DateTime _pickUpDeadline = DateTime.ParseExact(Model.Order.pickUpDeadline, "dd-MM-yyyy hh:mm:ss", null);
+    bool pickupDeadlineNotPassed = DateTime.Now < _pickUpDeadline;
 }
 
-<div id="details-page-wrapper">
-    <div class="row">
-        <div class="col-lg-12">
-            <h2 class="page-header">
-                @ViewData["Message"]
-            </h2>
+    <div id="details-page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">
+                    @ViewData["Message"]
+                </h2>
 
-            <div class="container">
-                <h4 class="fa-bo">
-                    Order number: @Model.orderModel.orderNumber
-                    @if (Model.orderModel.delivered)
-                    {
-                        <span class="pull-right">Delivered on: @Model.orderModel.dropOffDeadline</span>
-                    }
-                    else if (Model.orderModel.pickedUp || Model.orderModel.awaitingPickUp)
-                    {
-                        <span class="pull-right">Delivering on: @Model.orderModel.dropOffDeadline</span>
-                    }
-                    else
-                    {
-                        <span class="pull-right">Delivery deadline: @Model.orderModel.dropOffDeadline</span>
-                    }
-                </h4>
-                <div class="progress">
-                    @if (Model.orderModel.delivered)
-                    {
-                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                            <span class="sr-only">
-                                100% Complete (success)
-                            </span>
-                        </div>
-                    }
-                    else if (Model.orderModel.pickedUp)
-                    {
-                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                            <span class="sr-only">
-                                40% In Transit (success)
-                            </span>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                            <span class="sr-only">
-                                0% Awaiting PickUp(success)
-                            </span>
-                        </div>
-                    }
+                <div class="container">
+                    <h4 class="fa-bo">
+                        Order number: @Model.Order.orderNumber
+                        @if (Model.Order.delivered)
+                        {
+                            <span class="pull-right">Delivered on: @Model.Order.dropOffDeadline</span>
+                        }
+                        else if (Model.Order.pickedUp || Model.Order.awaitingPickUp)
+                        {
+                            <span class="pull-right">Delivering on: @Model.Order.dropOffDeadline</span>
+                        }
+                        else
+                        {
+                            <span class="pull-right">Delivery deadline: @Model.Order.dropOffDeadline</span>
+                        }
+                    </h4>
+                    <div class="progress">
+                        @if (Model.Order.delivered)
+                        {
+                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span class="sr-only">
+                                    100% Complete (success)
+                                </span>
+                            </div>
+                        }
+                        else if (Model.Order.pickedUp)
+                        {
+                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                <span class="sr-only">
+                                    40% In Transit (success)
+                                </span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                <span class="sr-only">
+                                    0% Awaiting PickUp(success)
+                                </span>
+                            </div>
+                        }
+                    </div>
+                    <br />
+                    <br />
+                    <label>Customer Company ID: @Model.Order.companyID</label>
                 </div>
-                <br />
-                <br />
-                <label>Customer Company ID: @Model.orderModel.companyID</label>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <label>PickUp Address:</label>
-            <br />
-            <iframe width="400"
-                    height="350"
-                    frameborder="0" style="border:0"
-                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
-                @Model.orderModel.pickUpAddress.city,
-                @Model.orderModel.pickUpAddress.zipCode,
-                @Model.orderModel.pickUpAddress.country,
-                @Model.orderModel.pickUpAddress.street" allowfullscreen></iframe>
-            <label>Pick-Up Deadline: @Model.orderModel.pickUpDeadline</label>
+        <div class="row">
+            <div class="col-md-6">
+                <label>PickUp Address:</label>
+                <br />
+                <iframe width="400"
+                        height="350"
+                        frameborder="0" style="border:0"
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
+                @Model.Order.pickUpAddress.city,
+                @Model.Order.pickUpAddress.zipCode,
+                @Model.Order.pickUpAddress.country,
+                @Model.Order.pickUpAddress.street" allowfullscreen></iframe>
+                <label>Pick-Up Deadline: @Model.Order.pickUpDeadline</label>
+            </div>
+
+            <div class="col-md-6">
+                <label>DropOff Address:</label>
+                <br />
+                <iframe width="400"
+                        height="350"
+                        frameborder="0" style="border:0"
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
+                @Model.Order.pickUpAddress.city,
+                @Model.Order.pickUpAddress.zipCode,
+                @Model.Order.pickUpAddress.country,
+                @Model.Order.pickUpAddress.street" allowfullscreen></iframe>
+                <label>DropOff Deadline: @Model.Order.dropOffDeadline</label>
+            </div>
         </div>
 
-        <div class="col-md-6">
-            <label>DropOff Address:</label>
-            <br />
-            <iframe width="400"
-                    height="350"
-                    frameborder="0" style="border:0"
-                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
-                @Model.orderModel.pickUpAddress.city,
-                @Model.orderModel.pickUpAddress.zipCode,
-                @Model.orderModel.pickUpAddress.country,
-                @Model.orderModel.pickUpAddress.street" allowfullscreen></iframe>
-            <label>DropOff Deadline: @Model.orderModel.dropOffDeadline</label>
-        </div>
+
+        <br />
+        <label>OrderNumber: @Model.Order.orderNumber</label>
+        <br />
+        <label>CompanyID: @Model.Order.companyID</label>
+        <br />
+        <label>PickUp Address: @Model.Order.pickUpAddress</label>
+        <br />
+        <label>PickUp Deadline: @Model.Order.pickUpDeadline</label>
+        <br />
+        <label>DropOff Address: @Model.Order.dropOffAddress</label>
+        <br />
+        <label>DropOff Deadline: @Model.Order.dropOffDeadline</label>
+        <br />
+        <label>Content Description: @Model.Order.contentDescription</label>
+        <br />
+        <label>ContainerSize: @Model.Order.containerSize</label>
+        <br />
+        <label>Weight: @Model.Order.weight</label>
+        <br />
+        <label>Price: @Model.Order.price</label>
+        <br />
+        <label>Size: @Model.Order.size</label>
+        <br />
+        @if (contractorClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
+        {
+            <form asp-page="OrderDetails" asp-page-handler="TakeOrder" method="post">
+                <button type="submit" class="pull-left btn btn-primary">Take Order</button>
+            </form>
+        }
+        <br />
+        @if (contractorClient && (orderAwaitingPickUp || orderPickedUp))
+        {
+            <form asp-page="OrderDetails" asp-page-handler="LateOrder" method="post">
+                <button type="submit" class="pull-left btn btn-danger">ALERT ABOUT LATE DELIVERY</button>
+            </form>
+        }
+        <br />
+        @if (contractorClient && (orderAwaitingPickUp || orderPickedUp) && pickupDeadlineNotPassed)
+        {
+            <form asp-page="OrderDetails" asp-page-handler="DeleteCancelOrderAsContractor" method="delete">
+                <button type="submit" class="pull-left btn btn-danger">CANCEL ORDER</button>
+            </form>
+        }
+        <br />
+        @if (contractorClient && orderAwaitingPickUp)
+        {
+            <form asp-page="OrderDetails" asp-page-handler="PickedUp" method="post">
+                <button type="submit" class="pull-left btn btn-danger">I Picked UP The Order</button>
+            </form>
+        }
+        <br />
+        @if (contractorClient && orderPickedUp)
+        {
+            <form asp-page="OrderDetails" asp-page-handler="Delivered" method="post">
+                <button type="submit" class="pull-left btn btn-danger">I Delivered The Order</button>
+            </form>
+        }
+        <br />
+        @if (customerClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
+        {
+            <form asp-page="OrderDetails" asp-page-handler="DeleteOrderAsCustomer" method="delete">
+                <button type="submit" class="pull-left btn btn-danger">DELETEwwwwwwd ORDER</button>
+            </form>
+        }
     </div>
-
-
-    <br />
-    <label>OrderNumber: @Model.orderModel.orderNumber</label>
-    <br />
-    <label>CompanyID: @Model.orderModel.companyID</label>
-    <br />
-    <label>PickUp Address: @Model.orderModel.pickUpAddress</label>
-    <br />
-    <label>PickUp Deadline: @Model.orderModel.pickUpDeadline</label>
-    <br />
-    <label>DropOff Address: @Model.orderModel.dropOffAddress</label>
-    <br />
-    <label>DropOff Deadline: @Model.orderModel.dropOffDeadline</label>
-    <br />
-    <label>Content Description: @Model.orderModel.contentDescription</label>
-    <br />
-    <label>ContainerSize: @Model.orderModel.containerSize</label>
-    <br />
-    <label>Weight: @Model.orderModel.weight</label>
-    <br />
-    <label>Price: @Model.orderModel.price</label>
-    <br />
-    <label>Size: @Model.orderModel.size</label>
-    @if (contractorClient && (!orderAwaitingPickUp || !orderPickedUp) && orderNotDelivered)
-    {
-        <form asp-page="OrderDetails" asp-page-handler="TakeOrder" method="post">
-            <button type="submit" class="pull-left btn btn-primary">Take Order</button>
-        </form>
-    }
-    <br />
-    @if (contractorClient && (orderAwaitingPickUp || orderPickedUp) && orderNotDelivered)
-    {
-        <form asp-page="OrderDetails" asp-page-handler="LateOrder" method="post">
-            <button type="submit" class="pull-left btn btn-danger">ALERT - LATE DELIVERY</button>
-        </form>
-    }
-</div>
