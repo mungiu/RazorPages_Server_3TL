@@ -64,32 +64,6 @@ namespace Client_Customer.Pages
             Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
         }
 
-        public void OnDeleteOrderAsContractor(string orderNumber)
-        {
-            orderService = new OrderService();
-            UpdateUserClaimsFromIdentityServer4();
-
-            string urlCancelAsContractor = "http://localhost:8080/server_war_exploded/root/api/refusetaken/" + orderNumber;
-            Task<string> response = orderService.DeleteCancelOrderAsContractorAsync(urlCancelAsContractor);
-
-            urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
-            UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
-            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
-        }
-
-        public void OnDeleteOrderAsCustomer(string orderNumber)
-        {
-            orderService = new OrderService();
-            UpdateUserClaimsFromIdentityServer4();
-
-            string deleteOrderUrl = "http://localhost:8080/server_war_exploded/root/api/deleteunsigned/" + orderNumber;
-            Task<string> response = orderService.DeleteOrderAsync(deleteOrderUrl);
-
-            urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
-            UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
-            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
-        }
-
         public void OnPostPickedUp(string orderNumber)
         {
             orderService = new OrderService();
@@ -112,6 +86,32 @@ namespace Client_Customer.Pages
 
             SetUpdateOrderTrackingUrl();
             Task<string> response = orderService.PostUpdateOrderTrackingAsync(orderNumber, currentUserID, updateType, urlUpdateOrderTracking);
+
+            urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
+            UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
+            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
+        }
+
+        public void OnPostCancelOrderAsContractor(string orderNumber)
+        {
+            orderService = new OrderService();
+            UpdateUserClaimsFromIdentityServer4();
+
+            string urlCancelAsContractor = "http://localhost:8080/server_war_exploded/root/api/refusetaken/" + orderNumber;
+            Task<string> response = orderService.CancelOrderAsContractorAsync(urlCancelAsContractor);
+
+            urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
+            UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
+            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
+        }
+
+        public void OnPostDeleteOrderAsCustomer(string orderNumber)
+        {
+            orderService = new OrderService();
+            UpdateUserClaimsFromIdentityServer4();
+
+            string deleteOrderUrl = "http://localhost:8080/server_war_exploded/root/api/deleteunsigned/" + orderNumber;
+            Task<string> response = orderService.DeleteOrderAsync(deleteOrderUrl);
 
             urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
             UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);

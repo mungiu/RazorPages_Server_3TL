@@ -147,7 +147,7 @@ namespace Client_Customer.Services
                 return httpResponseAsString;
         }
 
-        public async Task<string> DeleteCancelOrderAsContractorAsync(string urlCancelAsContractor)
+        public async Task<string> CancelOrderAsContractorAsync(string urlCancelAsContractor)
         {
             string httpResponseAsString = null;
             // Sending the JSON and getting status response
