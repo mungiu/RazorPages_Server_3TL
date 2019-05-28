@@ -138,7 +138,7 @@
         <br />
         @if (contractorClient && (orderAwaitingPickUp || orderPickedUp) && pickupDeadlineNotPassed)
         {
-            <form asp-page="OrderDetails" asp-page-handler="DeleteCancelOrderAsContractor" method="delete">
+            <form asp-page="OrderDetails" asp-page-handler="AsContractor" method="delete">
                 <button type="submit" class="pull-left btn btn-danger">CANCEL ORDER</button>
             </form>
         }
@@ -159,8 +159,8 @@
         <br />
         @if (customerClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
         {
-            <form asp-page="OrderDetails" asp-page-handler="DeleteOrderAsCustomer" method="delete">
-                <button type="submit" class="pull-left btn btn-danger">DELETEwwwwwwd ORDER</button>
+            <form asp-page="OrderDetails" asp-page-handler="AsCustomer" method="delete">
+                <button type="submit" class="pull-left btn btn-danger">DELETE ORDER</button>
             </form>
         }
     </div>

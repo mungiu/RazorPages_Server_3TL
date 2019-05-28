@@ -64,12 +64,12 @@ namespace Client_Customer.Pages
             Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
         }
 
-        public void OnDeleteCancelOrderAsContractor(string orderNumber)
+        public void OnDeleteAsContractor(string orderNumber)
         {
             orderService = new OrderService();
             UpdateUserClaimsFromIdentityServer4();
 
-            string urlCancelAsContractor = "http://localhost:8080/server_war_exploded/root/api/cancelorder/" + orderNumber;
+            string urlCancelAsContractor = "http://localhost:8080/server_war_exploded/root/api/refusetaken/" + orderNumber;
             Task<string> response = orderService.DeleteCancelOrderAsContractorAsync(urlCancelAsContractor);
 
             urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
@@ -77,12 +77,12 @@ namespace Client_Customer.Pages
             Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
         }
 
-        public void OnDeleteOrderAsCustomer(string orderNumber)
+        public void OnDeleteAsCustomer(string orderNumber)
         {
             orderService = new OrderService();
             UpdateUserClaimsFromIdentityServer4();
 
-            string deleteOrderUrl = "http://localhost:8080/server_war_exploded/root/api/order/" + orderNumber;
+            string deleteOrderUrl = "http://localhost:8080/server_war_exploded/root/api/deleteunsigned/" + orderNumber;
             Task<string> response = orderService.DeleteOrderAsync(deleteOrderUrl);
 
             urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";

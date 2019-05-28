@@ -17,17 +17,34 @@ namespace Client_Customer.Pages
 
         [BindProperty]
         public Order Order { get; set; }
+        public string currentUserID;
+        public string clientType;
+
+        public void OnGet()
+        {
+            foreach (var claim in User.Claims)
+            {
+                if (claim.Type.Equals("sub"))
+                    currentUserID = claim.Value;
+                if (claim.Type.Equals("role"))
+                    clientType = claim.Value;
+            }
+        }
         public void OnPost()
         {
             foreach (var claim in User.Claims)
             {
                 if (claim.Type.Equals("sub"))
                     Order.companyID = claim.Value;
+                if (claim.Type.Equals("role"))
+                    clientType = claim.Value;
             }
 
             targetUrl = "http://localhost:8080/server_war_exploded/root/api/order";
             orderService = new OrderService();
             Task<string> response = orderService.PostNewOrderAsync(Order, targetUrl);
+
+            //Redirect("http://localhost:8080/server_war_exploded/root/api/orders");
         }
     }
 }
