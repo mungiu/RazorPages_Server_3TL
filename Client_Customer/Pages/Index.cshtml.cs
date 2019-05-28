@@ -24,7 +24,7 @@ namespace Client_Customer.Pages
 
         public void OnGet()
         {
-            targetUri = new Uri("http://localhost:8080/server_war_exploded/root/api/orders");
+            targetUri = new Uri("http://localhost:8080/server_war_exploded/root/api/allOrders");
             orderService = new OrderService();
             orderList = Task.Run(() => orderService.GetOrderListAsync(targetUri)).Result;
 
