@@ -122,45 +122,37 @@
         <br />
         <label>Size: @Model.Order.size</label>
         <br />
-        @if (contractorClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
-        {
-            <form asp-page="OrderDetails" asp-page-handler="TakeOrder" method="post">
-                <button type="submit" class="pull-left btn btn-primary">Take Order</button>
-            </form>
-        }
+        <form asp-page="OrderDetails" method="post">
+            @if (contractorClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
+            {
+                <button asp-page-handler="TakeOrder" type="submit" class="pull-left btn btn-primary">Take Order</button>
+            }
+            <br />
+            @if (contractorClient && (orderAwaitingPickUp || orderPickedUp))
+            {
+                <button asp-page-handler="LateOrder" type="submit" class="pull-left btn btn-danger">ALERT ABOUT LATE DELIVERY</button>
+            }
+            <br />
+            @if (contractorClient && orderAwaitingPickUp)
+            {
+                <button asp-page-handler="PickedUp" type="submit" class="pull-left btn btn-danger">I Picked UP The Order</button>
+            }
+            <br />
+            @if (contractorClient && orderPickedUp)
+            {
+                <button asp-page-handler="Delivered" type="submit" class="pull-left btn btn-danger">I Delivered The Order</button>
+            }
+        </form>
         <br />
-        @if (contractorClient && (orderAwaitingPickUp || orderPickedUp))
-        {
-            <form asp-page="OrderDetails" asp-page-handler="LateOrder" method="post">
-                <button type="submit" class="pull-left btn btn-danger">ALERT ABOUT LATE DELIVERY</button>
-            </form>
-        }
-        <br />
-        @if (contractorClient && (orderAwaitingPickUp || orderPickedUp) && pickupDeadlineNotPassed)
-        {
-            <form asp-page="OrderDetails" asp-page-handler="AsContractor" method="delete">
-                <button type="submit" class="pull-left btn btn-danger">CANCEL ORDER</button>
-            </form>
-        }
-        <br />
-        @if (contractorClient && orderAwaitingPickUp)
-        {
-            <form asp-page="OrderDetails" asp-page-handler="PickedUp" method="post">
-                <button type="submit" class="pull-left btn btn-danger">I Picked UP The Order</button>
-            </form>
-        }
-        <br />
-        @if (contractorClient && orderPickedUp)
-        {
-            <form asp-page="OrderDetails" asp-page-handler="Delivered" method="post">
-                <button type="submit" class="pull-left btn btn-danger">I Delivered The Order</button>
-            </form>
-        }
-        <br />
-        @if (customerClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
-        {
-            <form asp-page="OrderDetails" asp-page-handler="AsCustomer" method="delete">
-                <button type="submit" class="pull-left btn btn-danger">DELETE ORDER</button>
-            </form>
-        }
+        <form asp-page="OrderDetails" method="delete">
+            @if (contractorClient && (orderAwaitingPickUp || orderPickedUp) && pickupDeadlineNotPassed)
+            {
+                <button asp-page-handler="OrderAsContractor" type="submit" class="pull-left btn btn-danger">CANCEL ORDER</button>
+            }
+            <br />
+            @if (customerClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
+            {
+                <button asp-page-handler="OrderAsCustomer" type="submit" class="pull-left btn btn-danger">DELETE ORDER</button>
+            }
+        </form>
     </div>

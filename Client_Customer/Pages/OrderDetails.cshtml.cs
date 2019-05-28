@@ -64,7 +64,7 @@ namespace Client_Customer.Pages
             Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
         }
 
-        public void OnDeleteAsContractor(string orderNumber)
+        public void OnDeleteOrderAsContractor(string orderNumber)
         {
             orderService = new OrderService();
             UpdateUserClaimsFromIdentityServer4();
@@ -77,7 +77,7 @@ namespace Client_Customer.Pages
             Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
         }
 
-        public void OnDeleteAsCustomer(string orderNumber)
+        public void OnDeleteOrderAsCustomer(string orderNumber)
         {
             orderService = new OrderService();
             UpdateUserClaimsFromIdentityServer4();
@@ -118,6 +118,7 @@ namespace Client_Customer.Pages
             Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
         }
 
+        [NonHandler]
         public void UpdateUserClaimsFromIdentityServer4()
         {
             foreach (var claim in User.Claims)
@@ -129,6 +130,7 @@ namespace Client_Customer.Pages
             }
         }
 
+        [NonHandler]
         public void SetUpdateOrderTrackingUrl()
         {
             urlUpdateOrderTracking = "http://localhost:8080/server_war_exploded/root/api/updatestatus";
