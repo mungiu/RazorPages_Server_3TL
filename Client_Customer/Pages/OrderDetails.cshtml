@@ -14,7 +14,7 @@
 }
 
 <div id="details-page-wrapper">
-    <div class="row">
+    <<div class="row">
         <div class="col-lg-12">
             <h2 class="page-header">
                 @ViewData["Message"]
@@ -62,95 +62,116 @@
                         </div>
                     }
                 </div>
-                <br />
-                <br />
-                <label>Customer Company ID: @Model.Order.companyID</label>
+            
+                
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <label>PickUp Address:</label>
+
+    <div class="row text-center">
+        <div class="col-md-offset-1 col-md-4">
+            <label class="what">Pick-up Deadline: <span class="info"> @Model.Order.pickUpDeadline </span> </label>
             <br />
-            <iframe width="400"
-                    height="350"
-                    frameborder="0" style="border:0"
-                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
+            <label class="what">PickUp Address:</label>
+            <br />
+                    <iframe width="400"
+                            height="350"
+                            frameborder="0" style="border:0"
+                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
                 @Model.Order.pickUpAddress.city,
                 @Model.Order.pickUpAddress.zipCode,
                 @Model.Order.pickUpAddress.country,
                 @Model.Order.pickUpAddress.street" allowfullscreen></iframe>
-            <label>Pick-Up Deadline: @Model.Order.pickUpDeadline</label>
-        </div>
 
-        <div class="col-md-6">
-            <label>DropOff Address:</label>
-            <br />
-            <iframe width="400"
-                    height="350"
-                    frameborder="0" style="border:0"
-                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
+                </div>
+
+                <div class="col-md-offset-1 col-md-4">
+                    <label class="what">Drop-off Deadline: <span class="info"> @Model.Order.dropOffDeadline </span> </label>
+                    <br />
+                    <label class="what">DropOff Address:</label>
+                    <br />
+
+
+                   
+                </div>
+
+               
+
+                   
+                    <iframe width="400"
+                            height="350"
+                            frameborder="0" style="border:0"
+                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
                 @Model.Order.pickUpAddress.city,
                 @Model.Order.pickUpAddress.zipCode,
                 @Model.Order.pickUpAddress.country,
                 @Model.Order.pickUpAddress.street" allowfullscreen></iframe>
-            <label>DropOff Deadline: @Model.Order.dropOffDeadline</label>
+
+
+
+                   
+
+                </div>
+            
+
+
+            <br />
+    
+
+            <label class="what">Customer Company ID: <span class="info"> @Model.Order.companyID </span> </label>
+            <br />
+            <label class="what">OrderNumber:<span class="info"> @Model.Order.orderNumber  </span> </label>
+            <br />
+            <label class="what">PickUp Address: <span class="info"> @Model.Order.pickUpAddress  </span> </label>
+            <br />
+            <label class="what">PickUp Deadline:<span class="info"> @Model.Order.pickUpDeadline </span> </label>
+            <br />
+            <label class="what">DropOff Address:<span class="info"> @Model.Order.dropOffAddress </span> </label>
+            <br />
+            <label class="what">DropOff Deadline:<span class="info"> @Model.Order.dropOffDeadline  </span> </label>
+            <br />
+            <label class="what">Content Description:<span class="info"> @Model.Order.contentDescription  </span> </label>
+            <br />
+            <label class="what">ContainerSize: <span class="info"> @Model.Order.containerSize </span> </label>
+            <br />
+            <label class="what">Weight: <span class="info"> @Model.Order.weight </span> </label>
+            <br />
+            <label class="what">Price: <span class="info"> @Model.Order.price </span> </label>
+            <br />
+            <label class="what">Size: <span class="info"> @Model.Order.size </span> </label>
+
+
+
+            <br />
+            <form asp-page="OrderDetails" method="post">
+                @if (contractorClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
+                {
+                    <button asp-page-handler="TakeOrder" type="submit" class="pull-left btn btn-primary">Take Order</button>
+                }
+                <br />
+                @if (contractorClient && (orderAwaitingPickUp || orderPickedUp))
+                {
+                    <button asp-page-handler="LateOrder" type="submit" class="pull-left btn btn-danger">ALERT ABOUT LATE DELIVERY</button>
+                }
+                <br />
+                @if (contractorClient && orderAwaitingPickUp)
+                {
+                    <button asp-page-handler="PickedUp" type="submit" class="pull-left btn btn-danger">I Picked UP The Order</button>
+                }
+                <br />
+                @if (contractorClient && orderPickedUp)
+                {
+                    <button asp-page-handler="Delivered" type="submit" class="pull-left btn btn-danger">I Delivered The Order</button>
+                }
+                <br />
+                @if (contractorClient && (orderAwaitingPickUp || orderPickedUp) && pickupDeadlineNotPassed)
+                {
+                    <button asp-page-handler="CancelOrderAsContractor" type="submit" class="pull-left btn btn-danger">CANCEL ORDER</button>
+                }
+                <br />
+                @if (customerClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
+                {
+                    <button asp-page-handler="DeleteOrderAsCustomer" type="submit" class="pull-left btn btn-danger">DELETE ORDER</button>
+                }
+            </form>
         </div>
-    </div>
-
-
-    <br />
-    <label>OrderNumber: @Model.Order.orderNumber</label>
-    <br />
-    <label>CompanyID: @Model.Order.companyID</label>
-    <br />
-    <label>PickUp Address: @Model.Order.pickUpAddress</label>
-    <br />
-    <label>PickUp Deadline: @Model.Order.pickUpDeadline</label>
-    <br />
-    <label>DropOff Address: @Model.Order.dropOffAddress</label>
-    <br />
-    <label>DropOff Deadline: @Model.Order.dropOffDeadline</label>
-    <br />
-    <label>Content Description: @Model.Order.contentDescription</label>
-    <br />
-    <label>ContainerSize: @Model.Order.containerSize</label>
-    <br />
-    <label>Weight: @Model.Order.weight</label>
-    <br />
-    <label>Price: @Model.Order.price</label>
-    <br />
-    <label>Size: @Model.Order.size</label>
-    <br />
-    <form asp-page="OrderDetails" method="post">
-        @if (contractorClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
-        {
-            <button asp-page-handler="TakeOrder" type="submit" class="pull-left btn btn-primary">Take Order</button>
-        }
-        <br />
-        @if (contractorClient && (orderAwaitingPickUp || orderPickedUp))
-        {
-            <button asp-page-handler="LateOrder" type="submit" class="pull-left btn btn-danger">ALERT ABOUT LATE DELIVERY</button>
-        }
-        <br />
-        @if (contractorClient && orderAwaitingPickUp)
-        {
-            <button asp-page-handler="PickedUp" type="submit" class="pull-left btn btn-danger">I Picked UP The Order</button>
-        }
-        <br />
-        @if (contractorClient && orderPickedUp)
-        {
-            <button asp-page-handler="Delivered" type="submit" class="pull-left btn btn-danger">I Delivered The Order</button>
-        }
-        <br />
-        @if (contractorClient && (orderAwaitingPickUp || orderPickedUp) && pickupDeadlineNotPassed)
-        {
-            <button asp-page-handler="CancelOrderAsContractor" type="submit" class="pull-left btn btn-danger">CANCEL ORDER</button>
-        }
-        <br />
-        @if (customerClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
-        {
-            <button asp-page-handler="DeleteOrderAsCustomer" type="submit" class="pull-left btn btn-danger">DELETE ORDER</button>
-        }
-    </form>
-</div>
