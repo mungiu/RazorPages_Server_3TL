@@ -18,12 +18,14 @@ namespace Client_Customer.Pages
         private string urlTakeOrder;
         private string targetUrlPickedUpOrder;
         private string targetUrlDeliveredOrder;
+        private string urlGoogleDistanceCalculation;
         private string urlUpdateOrderTracking;
         private string updateType;
         private Uri UriGetOrder;
         public Order Order { get; set; }
         public string currentUserID;
         public string clientType;
+        public GoogleRoute GoogleRoute { get; set; }
 
         public void OnGet(string orderNumber)
         {
@@ -35,6 +37,22 @@ namespace Client_Customer.Pages
             UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
             orderService = new OrderService();
             Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
+            urlGoogleDistanceCalculation = $"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial" +
+                "&origins=" +
+                $"{Order.pickUpAddress.city.Replace(" ", "+")}," +
+                $"{Order.pickUpAddress.zipCode.Replace(" ", "+")}," +
+                $"{Order.pickUpAddress.country.Replace(" ", "+")}," +
+                $"{Order.pickUpAddress.street.Replace(" ", "+")}" +
+                "&destination=" +
+                $"{Order.dropOffAddress.city.Replace(" ", "+")}," +
+                $"{Order.dropOffAddress.zipCode.Replace(" ", "+")}," +
+                $"{Order.dropOffAddress.country.Replace(" ", "+")}," +
+                $"{Order.dropOffAddress.street.Replace(" ", "+")}" +
+                "&key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&";
+
+            //"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&";
+
+            GoogleRoute = Task.Run(() => orderService.GetRouteInformationFromGoogleAPI(urlGoogleDistanceCalculation)).Result;
         }
 
         public void OnPostTakeOrder(string orderNumber)

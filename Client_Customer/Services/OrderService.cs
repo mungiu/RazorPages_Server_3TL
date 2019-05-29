@@ -178,20 +178,16 @@ namespace Client_Customer.Services
             else
                 return httpResponseAsString;
         }
-        //public async Task<string> PutJsonToUrlAsync(string Url, StringContent jsonAsHttpContent)
-        //{
-        //    string httpResponseAsString = null;
-        //    // Sending the JSON and getting status response
-        //    using (HttpClient httpClient = new HttpClient())
-        //    {
-        //        HttpResponseMessage httpResponse = await httpClient.PutAsync(Url, jsonAsHttpContent);
-        //        httpResponseAsString = httpResponse.StatusCode.ToString();
-        //    }
 
-        //    if (httpResponseAsString == null)
-        //        return "Server did not reply";
-        //    else
-        //        return httpResponseAsString;
-        //}
+        public async Task<GoogleRoute> GetRouteInformationFromGoogleAPI(string urlWithAPIKey)
+        {
+            Uri uri = new Uri(urlWithAPIKey);
+            GoogleRoute googleRoute = null;
+
+            string jsonString = await GetJsonStringAsync(uri);
+            googleRoute = JsonConvert.DeserializeObject<GoogleRoute>(jsonString);
+
+            return googleRoute;
+        }
     }
 }
