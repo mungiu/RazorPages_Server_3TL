@@ -27,7 +27,7 @@ namespace Client_Customer.Pages
         public string clientType;
         public GoogleRoute GoogleRoute { get; set; }
 
-        public void OnGet(string orderNumber)
+        public async void OnGetAsync(string orderNumber)
         {
             //// getting saved identity token
             //var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
@@ -36,14 +36,18 @@ namespace Client_Customer.Pages
             urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
             UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
             orderService = new OrderService();
-            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
+
+            Task<Order> taskOrder = orderService.GetOrderByOrderNumberAsync(UriGetOrder);
+            taskOrder.Wait();
+            Order = taskOrder.Result;
+
             urlGoogleDistanceCalculation = $"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial" +
                 "&origins=" +
                 $"{Order.pickUpAddress.city.Replace(" ", "+")}," +
                 $"{Order.pickUpAddress.zipCode.Replace(" ", "+")}," +
                 $"{Order.pickUpAddress.country.Replace(" ", "+")}," +
                 $"{Order.pickUpAddress.street.Replace(" ", "+")}" +
-                "&destination=" +
+                "&destinations=" +
                 $"{Order.dropOffAddress.city.Replace(" ", "+")}," +
                 $"{Order.dropOffAddress.zipCode.Replace(" ", "+")}," +
                 $"{Order.dropOffAddress.country.Replace(" ", "+")}," +
@@ -52,7 +56,9 @@ namespace Client_Customer.Pages
 
             //"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&";
 
-            GoogleRoute = Task.Run(() => orderService.GetRouteInformationFromGoogleAPI(urlGoogleDistanceCalculation)).Result;
+            Task<GoogleRoute> taskGoogleRoute = orderService.GetRouteInformationFromGoogleAPI(urlGoogleDistanceCalculation);
+            taskGoogleRoute.Wait();
+            GoogleRoute = taskGoogleRoute.Result;
         }
 
         public void OnPostTakeOrder(string orderNumber)
@@ -131,9 +137,10 @@ namespace Client_Customer.Pages
             string deleteOrderUrl = "http://localhost:8080/server_war_exploded/root/api/deleteunsigned/" + orderNumber;
             Task<string> response = orderService.DeleteOrderAsync(deleteOrderUrl);
 
+            /*
             urlGetOrder = "http://localhost:8080/server_war_exploded/root/api/order/";
             UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
-            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;
+            Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;*/
         }
 
         [NonHandler]

@@ -8,6 +8,7 @@
     bool orderNotDelivered = !Model.Order.delivered;
     bool contractorClient = Model.clientType.Equals("contractor");
     bool customerClient = Model.clientType.Equals("customer");
+    bool userIDMatchesOrderCreatorID = Model.currentUserID == Model.Order.companyID;
 
     DateTime _pickUpDeadline = DateTime.ParseExact(Model.Order.pickUpDeadline, "dd-MM-yyyy hh:mm:ss", null);
     bool pickupDeadlineNotPassed = DateTime.Now < _pickUpDeadline;
@@ -99,12 +100,16 @@
                 <label>DropOff Deadline: @Model.Order.dropOffDeadline</label>
             </div>
         </div>
-        <br />
-        <label>Distance (offered by Google Maps API): @Model.GoogleRoute.rows[0].elements[0].distance.text</label>
-        <br />
-        <label>Duration  (offered by Google Maps API): @Model.GoogleRoute.rows[0].elements[0].duration.text</label>
-        <br />
-        <label>Status (if this status is not OK calculate distance yourself using GoogleMaps): @Model.GoogleRoute.rows[0].elements[0].status</label>
+        @if (Model.GoogleRoute != null)
+        {
+            <br />
+            <label>Distance (offered by Google Maps API): @Model.GoogleRoute.rows[0].elements[0].distance.text</label>
+            <br />
+            <label>Duration  (offered by Google Maps API): @Model.GoogleRoute.rows[0].elements[0].duration.text</label>
+            <br />
+            <label>Status (if this status is not OK calculate distance yourself using GoogleMaps): @Model.GoogleRoute.rows[0].elements[0].status</label>
+        }
+
         <br />
         <label>Price: @Model.Order.price</label>
         <br />
@@ -130,8 +135,6 @@
         <label>Weight: @Model.Order.weight</label>
         <br />
         <label>Size: @Model.Order.size</label>
-        <br />
-        <label>Late delivery: @Model.Order.lateDelivery</label>
         <br />
         <label>Late delivery: @Model.Order.lateDelivery</label>
         <br />
@@ -164,7 +167,7 @@
                 <button asp-page-handler="CancelOrderAsContractor" type="submit" class="pull-left btn btn-danger">CANCEL ORDER</button>
             }
             <br />
-            @if (customerClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
+            @if (customerClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered && userIDMatchesOrderCreatorID)
             {
                 <button asp-page-handler="DeleteOrderAsCustomer" type="submit" class="pull-left btn btn-danger">DELETE ORDER</button>
             }
