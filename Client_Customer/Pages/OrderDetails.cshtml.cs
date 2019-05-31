@@ -27,7 +27,7 @@ namespace Client_Customer.Pages
         public string clientType;
         public GoogleRoute GoogleRoute { get; set; }
 
-        public async void OnGetAsync(string orderNumber)
+        public void OnGet(string orderNumber)
         {
             //// getting saved identity token
             //var identityToken = Task.Run(() => HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken)).Result;
@@ -53,8 +53,6 @@ namespace Client_Customer.Pages
                 $"{Order.dropOffAddress.country.Replace(" ", "+")}," +
                 $"{Order.dropOffAddress.street.Replace(" ", "+")}" +
                 "&key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&";
-
-            //"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&";
 
             Task<GoogleRoute> taskGoogleRoute = orderService.GetRouteInformationFromGoogleAPI(urlGoogleDistanceCalculation);
             taskGoogleRoute.Wait();

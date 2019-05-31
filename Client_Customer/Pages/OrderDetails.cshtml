@@ -100,7 +100,7 @@
                 <label>DropOff Deadline: @Model.Order.dropOffDeadline</label>
             </div>
         </div>
-        @if (Model.GoogleRoute != null)
+        @if (Model.GoogleRoute.rows[0].elements[0].status.Equals("OK"))
         {
             <br />
             <label>Distance (offered by Google Maps API): @Model.GoogleRoute.rows[0].elements[0].distance.text</label>
