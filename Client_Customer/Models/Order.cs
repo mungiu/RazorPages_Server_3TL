@@ -11,14 +11,29 @@ namespace Client_Customer.Models
     {
         public string orderNumber { get; set; }
         public string companyID { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
         public Address pickUpAddress { get; set; }
+        [Required]
         public string pickUpDeadline { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
         public Address dropOffAddress { get; set; }
+        [Required]
         public string dropOffDeadline { get; set; }
+        [Required]
+        [DataType(DataType.MultilineText)]
         public string contentDescription { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
         public string containerSize { get; set; }
+        [Required]
+        [Range(0, 99999.99)]
         public float weight { get; set; }
+        [Required]
         public string size { get; set; }
+        [Required]
+        [Range(0, 999999.99)]
         public float price { get; set; }
         public string responsibleCompany { get; set; }
         public bool awaitingPickUp { get; set; }

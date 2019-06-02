@@ -30,20 +30,28 @@ namespace Client_Customer.Pages
                     clientType = claim.Value;
             }
         }
-        public void OnPost()
+        public IActionResult OnPost()
         {
-            foreach (var claim in User.Claims)
+            if (ModelState.IsValid)
             {
-                if (claim.Type.Equals("sub"))
-                    Order.companyID = claim.Value;
-                if (claim.Type.Equals("role"))
-                    clientType = claim.Value;
+                foreach (var claim in User.Claims)
+                {
+                    if (claim.Type.Equals("sub"))
+                        Order.companyID = claim.Value;
+                    if (claim.Type.Equals("role"))
+                        clientType = claim.Value;
+                }
+
+                targetUrl = "http://localhost:8080/server_war_exploded/root/api/order";
+                orderService = new OrderService();
+                Task<string> response = orderService.PostNewOrderAsync(Order, targetUrl);
+
+                return RedirectToPage("MyOrders", currentUserID);
             }
-
-            targetUrl = "http://localhost:8080/server_war_exploded/root/api/order";
-            orderService = new OrderService();
-            Task<string> response = orderService.PostNewOrderAsync(Order, targetUrl);
-
+            else
+            {
+                return RedirectToPage("CreateOrder");
+            }
             //Redirect("http://localhost:8080/server_war_exploded/root/api/orders");
         }
     }

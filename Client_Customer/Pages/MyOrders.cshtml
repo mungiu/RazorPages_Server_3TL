@@ -32,62 +32,65 @@
                     </div>
                     <div class="panel-body">
                         <div class="list-group">
-                            @foreach (Order order in Model.orderList.Orders)
+                            @if (Model.orderList.Orders != null)
                             {
-                                <a asp-page="OrderDetails" asp-route-orderNumber="@order.orderNumber" class="list-group-item">
-                                    <h4 class="fa-bo">
-                                        Order number: @order.orderNumber
-                                        @if (order.delivered)
-                                        {
-                                            <span class="pull-right">Delivered on: @order.dropOffDeadline</span>
-                                        }
-                                        else if (order.pickedUp || order.awaitingPickUp)
-                                        {
-                                            <span class="pull-right">Delivering on: @order.dropOffDeadline</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="pull-right">Delivery deadline: @order.dropOffDeadline</span>
-                                        }
-                                    </h4>
-                                    <p class="list-group-item-text">
-                                        Order Status:
-                                        @if (order.delivered)
-                                        {<div class="text-success">Delivered</div>}
-                                        else if (order.pickedUp)
-                                        { <div class="text-warning">In transit</div>}
-                                        else if (order.awaitingPickUp)
-                                        { <div class="text-warning">Awaiting PickUp</div> }
-                                        else
-                                        { <div class="text-danger">No courier assigned</div>}
-                                    </p>
-                                    <div class="progress">
-                                        @if (order.delivered)
-                                        {
-                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                                <span class="sr-only">
-                                                    100% Complete (success)
-                                                </span>
-                                            </div>
-                                        }
-                                        else if (order.pickedUp)
-                                        {
-                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                <span class="sr-only">
-                                                    40% In Transit (success)
-                                                </span>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                                <span class="sr-only">
-                                                    0% Awaiting PickUp(success)
-                                                </span>
-                                            </div>
-                                        }
-                                    </div>
-                                </a>
+                                foreach (Order order in Model.orderList.Orders)
+                                {
+                                    <a asp-page="OrderDetails" asp-route-orderNumber="@order.orderNumber" class="list-group-item">
+                                        <h4 class="fa-bo">
+                                            Order number: @order.orderNumber
+                                            @if (order.delivered)
+                                            {
+                                                <span class="pull-right">Delivered on: @order.dropOffDeadline</span>
+                                            }
+                                            else if (order.pickedUp || order.awaitingPickUp)
+                                            {
+                                                <span class="pull-right">Delivering on: @order.dropOffDeadline</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="pull-right">Delivery deadline: @order.dropOffDeadline</span>
+                                            }
+                                        </h4>
+                                        <p class="list-group-item-text">
+                                            Order Status:
+                                            @if (order.delivered)
+                                            {<div class="text-success">Delivered</div>}
+                                            else if (order.pickedUp)
+                                            { <div class="text-warning">In transit</div>}
+                                            else if (order.awaitingPickUp)
+                                            { <div class="text-warning">Awaiting PickUp</div> }
+                                            else
+                                            { <div class="text-danger">No courier assigned</div>}
+                                        </p>
+                                        <div class="progress">
+                                            @if (order.delivered)
+                                            {
+                                                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                    <span class="sr-only">
+                                                        100% Complete (success)
+                                                    </span>
+                                                </div>
+                                            }
+                                            else if (order.pickedUp)
+                                            {
+                                                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                                    <span class="sr-only">
+                                                        40% In Transit (success)
+                                                    </span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                                    <span class="sr-only">
+                                                        0% Awaiting PickUp(success)
+                                                    </span>
+                                                </div>
+                                            }
+                                        </div>
+                                    </a>
+                                }
                             }
                         </div>
                     </div>
