@@ -31,5 +31,50 @@ namespace Client_Customer.Pages
             targetUri = new Uri("http://localhost:8080/server_war_exploded/root/api/myorders/" + currentUserID);
             orderList = Task.Run(() => orderService.GetOrderListAsync(targetUri)).Result;
         }
+
+        //public void OnGetByID()
+        //{
+        //    string currentUserID = null;
+
+        //    foreach (var claim in User.Claims)
+        //    {
+        //        if (claim.Type.Equals("sub"))
+        //            currentUserID = claim.Value;
+        //    }
+
+        //    orderService = new OrderService();
+        //    targetUri = new Uri("http://localhost:8080/server_war_exploded/root/api/myorders/" + currentUserID);
+        //    orderList = Task.Run(() => orderService.GetOrderListAsync(targetUri)).Result;
+        //}
+
+        //public void OnGetByStatus()
+        //{
+        //    string currentUserID = null;
+
+        //    foreach (var claim in User.Claims)
+        //    {
+        //        if (claim.Type.Equals("sub"))
+        //            currentUserID = claim.Value;
+        //    }
+
+        //    orderService = new OrderService();
+        //    targetUri = new Uri("http://localhost:8080/server_war_exploded/root/api/myorders/" + currentUserID);
+        //    orderList = Task.Run(() => orderService.GetOrderListAsync(targetUri)).Result;
+        //}
+
+        //public void OnGetByDeadline()
+        //{
+        //    string currentUserID = null;
+
+        //    foreach (var claim in User.Claims)
+        //    {
+        //        if (claim.Type.Equals("sub"))
+        //            currentUserID = claim.Value;
+        //    }
+
+        //    orderService = new OrderService();
+        //    targetUri = new Uri("http://localhost:8080/server_war_exploded/root/api/myorders/" + currentUserID);
+        //    orderList = Task.Run(() => orderService.GetOrderListAsync(targetUri)).Result;
+        //}
     }
 }
