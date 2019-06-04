@@ -69,11 +69,9 @@ body {
 
 #details-page-wrapper {
     background-color: white !important;
-}
-
-#details-page-wrapper {
     width: 80vw;
     margin-left: 10vw;
+   
 }
 
 .what {
