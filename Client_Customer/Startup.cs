@@ -104,8 +104,8 @@ namespace Client_Customer
             {
                 app.UseDeveloperExceptionPage();
             }
-            /// SELF NOTE: "else" is extra code according to https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-2.2
-            /// NOTE: This will not currently work
+            //// SELF NOTE: "else" is extra code according to https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-2.2
+            //// NOTE: This will not currently work
             //else
             //{
             //    app.UseExceptionHandler("/Error");

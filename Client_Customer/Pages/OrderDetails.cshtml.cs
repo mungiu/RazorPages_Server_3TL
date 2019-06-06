@@ -19,8 +19,6 @@ namespace Client_Customer.Pages
         private OrderService orderService;
         private string urlGetOrder;
         private string urlTakeOrder;
-        private string targetUrlPickedUpOrder;
-        private string targetUrlDeliveredOrder;
         private string urlGoogleDistanceCalculation;
         private string urlUpdateOrderTracking;
         private string updateType;

@@ -4,12 +4,412 @@
         <name>Client_Customer</name>
     </assembly>
     <members>
+        <member name="T:Client_Customer.Models.Address">
+            <summary>
+            Represents the address as a Model when address information processing happens.
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Models.Client">
+            <summary>
+            Used for representing the client Model (logged in user) when client data is received.
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Models.ClientList">
+            <summary>
+            Used for representing a list of clients in one object.
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Models.GoogleRoute">
+            <summary>
+            Represents the top level class used for deserializing data retrieved from the Distance Matrix API provided by google.
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Models.Row">
+            <summary>
+            A list of grouped elements from the Distance Matrix API
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Models.Element">
+            <summary>
+            Groups all elements of the Distance Matrix API response into one object
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Models.Distance">
+            <summary>
+            Represents the distance received from the google api
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Models.Duration">
+            <summary>
+            Represents the duration received from the google api
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Models.Order">
+            <summary>
+            Represents the Order object which is used for Serializing and Deserializing JSON strings carrying Order information.
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Models.OrderList">
+            <summary>
+            Represents the OrderList object which is used for Serializing and Deserializing JSON strings carrying OrderLists information.
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Pages.CreateOrderModel">
+            <summary>
+            Model class for CreateOrder page, responsible for handling all get/post requests directly from the User.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Pages.CreateOrderModel.OnGet">
+            <summary>
+            Handles any unspecified OnGet requests from user. Currently retrievs user information for further needs such as order binding to customerID.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Pages.CreateOrderModel.OnPost">
+            <summary>
+            Handles any unspecified OnPost requests from user. Currently posts a new order to the second tier of this application after gatherin information about the currently logged in user.
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Pages.IndexModel">
+            <summary>
+            Model class for the homepage (Index), responsible for handling all get/post requests directly from the User.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Pages.IndexModel.OnGet">
+            <summary>
+            Handles any unspecified OnGet requests from user. Currently returns a list of all available orders.
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Pages.LoginModel">
+            <summary>
+            Model class for Login, responsible for handling all get/post requests directly from the User.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Pages.LoginModel.OnGet">
+            <summary>
+            Handles any unspecified OnGet requests from user and signs him out.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Pages.LoginModel.OnPost">
+            <summary>
+            Handles any unspecified OnPot requests from user.
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Pages.MyOrdersModel">
+            <summary>
+            Model class for MyOrders, responsible for handling all get/post requests directly from the User.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Pages.MyOrdersModel.OnGet">
+            <summary>
+            Handles any unspecified OnGet requests from user. Currently returns a list of all orders related to the logged in user.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Pages.MyOrdersModel.OnGetByStatus">
+            <summary>
+            Gets all orders filtered by status
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Pages.MyOrdersModel.OnGetByDeadline">
+            <summary>
+            Gets all orders filtered by deadline
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Pages.MyOrdersModel.UpdateUserClaimsFromIdentityServer4">
+            <summary>
+            Updates information about who a user claims to be in the current session.
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Pages.OrderDetailsModel">
+            <summary>
+            Model class for Order Details, responsible for handling all get/post requests directly from the User.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Pages.OrderDetailsModel.OnGet(System.String)">
+            <summary>
+            Handles any unspecified OnGet requests from user. Currently returns all details about the current order using both the Java API and the Google API in series. NOT in paralel.
+            </summary>
+            <param name="orderNumber"></param>
+        </member>
+        <member name="M:Client_Customer.Pages.OrderDetailsModel.OnPostTakeOrder(System.String)">
+            <summary>
+            Hnadles specific Post requests for taking an order as a contractor.
+            </summary>
+            <param name="orderNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Pages.OrderDetailsModel.OnPostLateOrder(System.String)">
+            <summary>
+            Allows the contractor thee notify that he will be late.
+            </summary>
+            <param name="orderNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Pages.OrderDetailsModel.OnPostPickedUp(System.String)">
+            <summary>
+            Allows the contractor to notify that he has picked up the order.
+            </summary>
+            <param name="orderNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Pages.OrderDetailsModel.OnPostDelivered(System.String)">
+            <summary>
+            Allows the contractor to notify that he has delivered the order.
+            </summary>
+            <param name="orderNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Pages.OrderDetailsModel.OnPostCancelOrderAsContractor(System.String)">
+            <summary>
+            Allows the contractor to cancel his order.
+            </summary>
+            <param name="orderNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Pages.OrderDetailsModel.OnPostDeleteOrderAsCustomer(System.String)">
+            <summary>
+            Allows the customer to delete his order.
+            </summary>
+            <param name="orderNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Pages.OrderDetailsModel.UpdateUserClaimsFromIdentityServer4">
+            <summary>
+            Updates information about who a user claims to be in the current session.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Pages.OrderDetailsModel.SetUpdateOrderTrackingUrl">
+            <summary>
+            Sets the URL for updating order tracking details.
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Program">
+            <summary>
+            This is the main class where the program starts.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Program.Main(System.String[])">
+            <summary>
+            The Main method that launches the program.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Client_Customer.Program.CreateWebHostBuilder(System.String[])">
+            <summary>
+            Used for building a WebHost builder.
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Client_Customer.Services.AccountService">
+            <summary>
+            Manages GET, POST, PUT, CANCEL, DELETE requests regarding a user account with the API
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Services.AccountService.GetClientByIDAndHashPassAsync(System.Uri)">
+            <summary>
+            GET request of client by ID and hasshed password
+            </summary>
+            <param name="clientUri"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.AccountService.PostNewClientAsync(Client_Customer.Models.Client,System.String)">
+            <summary>
+            POST request of newwely created client
+            </summary>
+            <param name="newClient"></param>
+            <param name="targetUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.AccountService.PutUpdatedClientAsync(Client_Customer.Models.Order,System.String)">
+            <summary>
+            PUT request with updated client information
+            </summary>
+            <param name="updatedClient"></param>
+            <param name="Url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.AccountService.GetJsonStringAsync(System.Uri)">
+            <summary>
+            GET request for any type or JSON at provided URL
+            </summary>
+            <param name="pathUri"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.AccountService.PostJsonToUrlAsync(System.String,System.Net.Http.StringContent)">
+            <summary>
+            POST request for any type of JSON a provided URL
+            </summary>
+            <param name="Url"></param>
+            <param name="jsonAsHttpContent"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Client_Customer.Services.IAccountService">
+            <summary>
+            Used for dependency inversion of the account services
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Services.IOrderService">
+            <summary>
+            Interface used for OrderService dependency inversion
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Services.IThisHttpClient">
+            <summary>
+            Interface used for HttpClient dependency inversion
+            </summary>
+        </member>
+        <member name="T:Client_Customer.Services.OrderService">
+            <summary>
+            Contains all methods used for facilitating http requests regarding an Order. Communicates with a RESTful type of API and has all methods defined as asynchronious tasks.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.PostNewOrderAsync(Client_Customer.Models.Order,System.String)">
+            <summary>
+            Posts a new order to the second tier.
+            </summary>
+            <param name="newOrder">The order to be posted</param>
+            <param name="targetUrl">The API url for the POST request</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.PostRegisterClientAsync(Client_Customer.Models.Client,System.String)">
+            <summary>
+            Posts a new client to the second tier
+            </summary>
+            <param name="newClient">The actual client</param>
+            <param name="targetUrlRegisterClient">The API url for posting new clients</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.GetOrderListAsync(System.Uri)">
+            <summary>
+            Gets a list of all available orders from the second Tier
+            </summary>
+            <param name="pathUri">The Uri of the RESTful API</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.GetOrderByOrderNumberAsync(System.Uri)">
+            <summary>
+            Gets the details of a specific order by order number
+            </summary>
+            <param name="orderUri">The URI to the API for getting and order details by ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.GetJsonStringAsync(System.Uri)">
+            <summary>
+            Gets a JSON string from a specified URI path
+            </summary>
+            <param name="pathUri">JSON string request location enpoint</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.PutUpdatedOrderAsync(Client_Customer.Models.Order,System.String)">
+            <summary>
+            Updates orders details via a put request towards the second tier API
+            </summary>
+            <param name="updatedOrder">Patrially filled order containing only details o be updated</param>
+            <param name="Url">API url for this type of PUT requests</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.PostUpdateOrderTrackingAsync(System.String,System.String,System.String,System.String)">
+            <summary>
+            Updates order tracking via a Post request to the API
+            </summary>
+            <param name="orderNumber">order number to update</param>
+            <param name="companyID">companyID that updates</param>
+            <param name="updateType">type of update ("lateOrder", "orderPickedUp", "orderDelivered")</param>
+            <param name="urlUpdateOrderTracking">URL used for orderTrackingupdate as POST requests to API</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.PostAssignedContractorToOrderAsync(System.String,System.String,System.String)">
+            <summary>
+            POST newely assigned contractor to current order
+            </summary>
+            <param name="orderNumber">Order number contractor is assigned to</param>
+            <param name="companyID">Contractor company ID</param>
+            <param name="targetUrl">API URL for such POST request</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.PutJsonToUrlAsync(System.String,System.Net.Http.StringContent)">
+            <summary>
+            PUT request to any specified URL with StringContent type of object
+            </summary>
+            <param name="Url">The API URL for such PUT requests</param>
+            <param name="jsonAsHttpContent">The string containing content</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.PostJsonToUrlAsync(System.String,System.Net.Http.StringContent)">
+            <summary>
+            POST request to any specified URL with StringContent object
+            </summary>
+            <param name="Url">API url for such request</param>
+            <param name="jsonAsHttpContent">The actual string containing JSON content</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.CancelOrderAsContractorAsync(System.String)">
+            <summary>
+            CANCEL type of request, where contractor cancels an order he was previously assigned to
+            </summary>
+            <param name="urlCancelAsContractor">API url for this type of CANCEL requests</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.DeleteOrderAsync(System.String)">
+            <summary>
+            DELETE type of request for deleting an existing order not yet assigned to a contractor
+            </summary>
+            <param name="deleteOrderUrl">The URL for such type of DELETE request</param>
+            <returns></returns>
+        </member>
+        <member name="M:Client_Customer.Services.OrderService.GetRouteInformationFromGoogleAPI(System.String)">
+            <summary>
+            GET request to the Google Maps Distance Matrix API returning distance and travel time information from specified point A to B
+            </summary>
+            <param name="urlWithAPIKey">Google API fully formed URL with request details</param>
+            <returns></returns>
+        </member>
+        <member name="T:Client_Customer.Services.ThisHttpClient">
+            <summary>
+            A class used for creating one HttpClient that will be used throughout the application.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Services.ThisHttpClient.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            Constructor accepting a context accessor
+            </summary>
+            <param name="httpContextAccessor"></param>
+        </member>
+        <member name="M:Client_Customer.Services.ThisHttpClient.GetClient">
+            <summary>
+            Return the current http client with a base address http://localhost:1601/ and with a json header
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Client_Customer.Startup">
+            <summary>
+            This class is used for configurin the Razor Pages application.
+            </summary>
+        </member>
+        <member name="P:Client_Customer.Startup.Configuration">
+            <summary>
+            Represent a set of key/value application coniguration properties.
+            </summary>
+        </member>
+        <member name="M:Client_Customer.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Specifies what to execute at startup.
+            </summary>
+            <param name="configuration"></param>
+        </member>
         <member name="M:Client_Customer.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             This method gets called by the runtime. Use this method to add services to the container. 
             For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
             </summary>
             <param name="services"></param>
+        </member>
+        <member name="M:Client_Customer.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app">IApplicationBuilder</param>
+            <param name="env">IHostingEnvironment</param>
         </member>
     </members>
 </doc>
