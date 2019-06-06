@@ -15,13 +15,18 @@ using System.Diagnostics;
 
 namespace Client_Customer.Pages
 {
+    /// <summary>
+    /// Model class for the homepage (Index), responsible for handling all get/post requests directly from the User.
+    /// </summary>
     [Authorize]
     public class IndexModel : PageModel
     {
         private OrderService orderService;
         private Uri targetUri;
         public OrderList orderList;
-
+        /// <summary>
+        /// Handles any unspecified OnGet requests from user. Currently returns a list of all available orders.
+        /// </summary>
         public void OnGet()
         {
             targetUri = new Uri("http://localhost:8080/server_war_exploded/root/api/unsignedOrders");

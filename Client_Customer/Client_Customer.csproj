@@ -7,8 +7,18 @@
     <StartupObject />
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\andre\source\repos\RazorPages_Server_3TL\Client_Customer\Client_Customer.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Folder Include="Pages\Components\" />
+    <Compile Remove="Pages\Components\**" />
+    <Content Remove="Pages\Components\**" />
+    <EmbeddedResource Remove="Pages\Components\**" />
+    <None Remove="Pages\Components\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

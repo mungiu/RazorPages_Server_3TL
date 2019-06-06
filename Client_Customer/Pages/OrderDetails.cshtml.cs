@@ -11,6 +11,9 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace Client_Customer.Pages
 {
+    /// <summary>
+    /// Model class for Order Details, responsible for handling all get/post requests directly from the User.
+    /// </summary>
     public class OrderDetailsModel : PageModel
     {
         private OrderService orderService;
@@ -22,11 +25,16 @@ namespace Client_Customer.Pages
         private string urlUpdateOrderTracking;
         private string updateType;
         private Uri UriGetOrder;
+
         public Order Order { get; set; }
         public string currentUserID;
         public string clientType;
         public GoogleRoute GoogleRoute { get; set; }
 
+        /// <summary>
+        /// Handles any unspecified OnGet requests from user. Currently returns all details about the current order using both the Java API and the Google API in series. NOT in paralel.
+        /// </summary>
+        /// <param name="orderNumber"></param>
         public void OnGet(string orderNumber)
         {
             //// getting saved identity token
@@ -58,7 +66,11 @@ namespace Client_Customer.Pages
             taskGoogleRoute.Wait();
             GoogleRoute = taskGoogleRoute.Result;
         }
-
+        /// <summary>
+        /// Hnadles specific Post requests for taking an order as a contractor.
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
         public IActionResult OnPostTakeOrder(string orderNumber)
         {
             orderService = new OrderService();
@@ -69,7 +81,11 @@ namespace Client_Customer.Pages
 
             return RedirectToPage("MyOrders");
         }
-
+        /// <summary>
+        /// Allows the contractor thee notify that he will be late.
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
         public IActionResult OnPostLateOrder(string orderNumber)
         {
             orderService = new OrderService();
@@ -81,7 +97,11 @@ namespace Client_Customer.Pages
 
             return RedirectToPage("MyOrders");
         }
-
+        /// <summary>
+        /// Allows the contractor to notify that he has picked up the order.
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
         public IActionResult OnPostPickedUp(string orderNumber)
         {
             orderService = new OrderService();
@@ -93,7 +113,11 @@ namespace Client_Customer.Pages
 
             return RedirectToPage("MyOrders");
         }
-
+        /// <summary>
+        /// Allows the contractor to notify that he has delivered the order.
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
         public IActionResult OnPostDelivered(string orderNumber)
         {
             orderService = new OrderService();
@@ -105,7 +129,11 @@ namespace Client_Customer.Pages
 
             return RedirectToPage("MyOrders");
         }
-
+        /// <summary>
+        /// Allows the contractor to cancel his order.
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
         public IActionResult OnPostCancelOrderAsContractor(string orderNumber)
         {
             orderService = new OrderService();
@@ -116,7 +144,11 @@ namespace Client_Customer.Pages
 
             return RedirectToPage("MyOrders");
         }
-
+        /// <summary>
+        /// Allows the customer to delete his order.
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
         public IActionResult OnPostDeleteOrderAsCustomer(string orderNumber)
         {
             orderService = new OrderService();
@@ -132,7 +164,9 @@ namespace Client_Customer.Pages
             UriGetOrder = new Uri(new Uri(urlGetOrder), orderNumber);
             Order = Task.Run(() => orderService.GetOrderByOrderNumberAsync(UriGetOrder)).Result;*/
         }
-
+        /// <summary>
+        /// Updates information about who a user claims to be in the current session.
+        /// </summary>
         [NonHandler]
         public void UpdateUserClaimsFromIdentityServer4()
         {
@@ -144,7 +178,9 @@ namespace Client_Customer.Pages
                     clientType = claim.Value;
             }
         }
-
+        /// <summary>
+        /// Sets the URL for updating order tracking details.
+        /// </summary>
         [NonHandler]
         public void SetUpdateOrderTrackingUrl()
         {

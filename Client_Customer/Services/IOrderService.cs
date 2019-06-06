@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Client_Customer.Services
 {
+    /// <summary>
+    /// Interface used for OrderService dependency inversion
+    /// </summary>
     public interface IOrderService
     {
         Task<string> PostNewOrderAsync(Order newOrder, string Url);

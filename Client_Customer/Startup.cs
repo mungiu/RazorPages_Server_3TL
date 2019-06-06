@@ -18,9 +18,20 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace Client_Customer
 {
+    /// <summary>
+    /// This class is used for configurin the Razor Pages application.
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Represent a set of key/value application coniguration properties.
+        /// </summary>
         public IConfiguration Configuration { get; set; }
+
+        /// <summary>
+        /// Specifies what to execute at startup.
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -82,7 +93,11 @@ namespace Client_Customer
                 });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">IApplicationBuilder</param>
+        /// <param name="env">IHostingEnvironment</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

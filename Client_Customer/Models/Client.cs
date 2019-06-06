@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Client_Customer.Models
 {
+    /// <summary>
+    /// Used for representing the client Model (logged in user) when client data is received.
+    /// </summary>
     public class Client
     {
-
         public int clientID { get; set; }
         public string companyName { get; set; }
         public Address address { get; set; }

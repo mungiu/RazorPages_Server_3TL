@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Client_Customer.Services
 {
+    /// <summary>
+    /// Used for dependency inversion of the account services
+    /// </summary>
     interface IAccountService
     {
         Task<string> PostNewClientAsync(Client newOrder, string Url);

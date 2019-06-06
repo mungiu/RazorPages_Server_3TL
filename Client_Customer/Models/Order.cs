@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Client_Customer.Models
 {
+    /// <summary>
+    /// Represents the Order object which is used for Serializing and Deserializing JSON strings carrying Order information.
+    /// </summary>
     public class Order
     {
         public string orderNumber { get; set; }
