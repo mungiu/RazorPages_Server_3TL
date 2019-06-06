@@ -14,162 +14,156 @@
     bool pickupDeadlineNotPassed = DateTime.Now < _pickUpDeadline;
 }
 
-    <div id="details-page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h2 class="page-header">
-                    @ViewData["Message"]
-                </h2>
+<div id="details-page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="page-header">
+                @ViewData["Message"]
+            </h2>
 
-                <div class="container">
-                    <h4 class="fa-bo">
-                        Order number: @Model.Order.orderNumber
-                        @if (Model.Order.delivered)
-                        {
-                            <span class="pull-right">Delivered on: @Model.Order.dropOffDeadline</span>
-                        }
-                        else if (Model.Order.pickedUp || Model.Order.awaitingPickUp)
-                        {
-                            <span class="pull-right">Delivering on: @Model.Order.dropOffDeadline</span>
-                        }
-                        else
-                        {
-                            <span class="pull-right">Delivery deadline: @Model.Order.dropOffDeadline</span>
-                        }
-                    </h4>
-                    <div class="progress">
-                        @if (Model.Order.delivered)
-                        {
-                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                <span class="sr-only">
-                                    100% Complete (success)
-                                </span>
-                            </div>
-                        }
-                        else if (Model.Order.pickedUp)
-                        {
-                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                <span class="sr-only">
-                                    40% In Transit (success)
-                                </span>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                <span class="sr-only">
-                                    0% Awaiting PickUp(success)
-                                </span>
-                            </div>
-                        }
-                    </div>
-                    <br />
-                    <br />
-                    <label>Customer Company ID: @Model.Order.companyID</label>
+            <div class="container">
+                <h4 class="fa-bo">
+                    Order number: @Model.Order.orderNumber
+                    @if (Model.Order.delivered)
+                    {
+                        <span class="pull-right">Delivered on: @Model.Order.dropOffDeadline</span>
+                    }
+                    else if (Model.Order.pickedUp || Model.Order.awaitingPickUp)
+                    {
+                        <span class="pull-right">Delivering on: @Model.Order.dropOffDeadline</span>
+                    }
+                    else
+                    {
+                        <span class="pull-right">Delivery deadline: @Model.Order.dropOffDeadline</span>
+                    }
+                </h4>
+                <div class="progress">
+                    @if (Model.Order.delivered)
+                    {
+                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            <span class="sr-only">
+                                100% Complete (success)
+                            </span>
+                        </div>
+                    }
+                    else if (Model.Order.pickedUp)
+                    {
+                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                            <span class="sr-only">
+                                40% In Transit (success)
+                            </span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            <span class="sr-only">
+                                0% Awaiting PickUp(success)
+                            </span>
+                        </div>
+                    }
                 </div>
+                <br />
+                <br />
+
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>PickUp Address:</label>
-                <br />
-                <iframe width="400"
-                        height="350"
-                        frameborder="0" style="border:0"
-                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
+    </div>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-4">
+            <label class="what">Pick-up Deadline: <span class="info"> @Model.Order.pickUpDeadline </span> </label>
+            <br />
+            <label class="what">PickUp Address:</label>
+            <br />
+            <iframe width="400"
+                    height="350"
+                    frameborder="0" style="border:0"
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
                 @Model.Order.pickUpAddress.city,
                 @Model.Order.pickUpAddress.zipCode,
                 @Model.Order.pickUpAddress.country,
                 @Model.Order.pickUpAddress.street" allowfullscreen></iframe>
-                <br />
-                <label>Pick-Up Deadline: @Model.Order.pickUpDeadline</label>
-            </div>
+            <br />
 
-            <div class="col-md-6">
-                <label>DropOff Address:</label>
-                <br />
-                <iframe width="400"
-                        height="350"
-                        frameborder="0" style="border:0"
-                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
+        </div>
+
+        <div class="col-md-offset-1 col-md-4">
+            <label class="what">Drop-off Deadline: <span class="info"> @Model.Order.dropOffDeadline </span> </label>
+            <br />
+            <label class="what">DropOff Address:</label>
+            <br />
+            <iframe width="400"
+                    height="350"
+                    frameborder="0" style="border:0"
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCbrS4DNvvkVu_i4iEAWM5T_5K2H0Ck3_Y&q=
                 @Model.Order.dropOffAddress.city,
                 @Model.Order.dropOffAddress.zipCode,
                 @Model.Order.dropOffAddress.country,
                 @Model.Order.dropOffAddress.street" allowfullscreen></iframe>
-                <br />
-                <label>DropOff Deadline: @Model.Order.dropOffDeadline</label>
-            </div>
-        </div>
-        @if (Model.GoogleRoute.rows[0].elements[0].status.Equals("OK"))
-        {
             <br />
-            <label>Distance (offered by Google Maps API): @Model.GoogleRoute.rows[0].elements[0].distance.text</label>
-            <br />
-            <label>Duration  (offered by Google Maps API): @Model.GoogleRoute.rows[0].elements[0].duration.text</label>
-            <br />
-            <label>Status (if this status is not OK calculate distance yourself using GoogleMaps): @Model.GoogleRoute.rows[0].elements[0].status</label>
-        }
 
-        <br />
-        <label>Price: @Model.Order.price</label>
-        <br />
-        <br />
-        <br />
-        <br />
-        <label>OrderNumber: @Model.Order.orderNumber</label>
-        <br />
-        <label>CompanyID: @Model.Order.companyID</label>
-        <br />
-        <label>PickUp Address: @Model.Order.pickUpAddress</label>
-        <br />
-        <label>PickUp Deadline: @Model.Order.pickUpDeadline</label>
-        <br />
-        <label>DropOff Address: @Model.Order.dropOffAddress</label>
-        <br />
-        <label>DropOff Deadline: @Model.Order.dropOffDeadline</label>
-        <br />
-        <label>Content Description: @Model.Order.contentDescription</label>
-        <br />
-        <label>ContainerSize: @Model.Order.containerSize</label>
-        <br />
-        <label>Weight: @Model.Order.weight</label>
-        <br />
-        <label>Size: @Model.Order.size</label>
-        <br />
-        <label>Late delivery: @Model.Order.lateDelivery</label>
-        <br />
-        <br />
-        <br />
-        <br />
-        <form asp-page="OrderDetails" method="post">
-            @if (contractorClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
-            {
-                <button asp-page-handler="TakeOrder" type="submit" class="pull-left btn btn-primary">Take Order</button>
-            }
-            <br />
-            @if (contractorClient && (orderAwaitingPickUp || orderPickedUp))
-            {
-                <button asp-page-handler="LateOrder" type="submit" class="pull-left btn btn-danger">ALERT ABOUT LATE DELIVERY</button>
-            }
-            <br />
-            @if (contractorClient && orderAwaitingPickUp)
-            {
-                <button asp-page-handler="PickedUp" type="submit" class="pull-left btn btn-danger">I Picked UP The Order</button>
-            }
-            <br />
-            @if (contractorClient && orderPickedUp)
-            {
-                <button asp-page-handler="Delivered" type="submit" class="pull-left btn btn-danger">I Delivered The Order</button>
-            }
-            <br />
-            @if (contractorClient && (orderAwaitingPickUp || orderPickedUp) && pickupDeadlineNotPassed)
-            {
-                <button asp-page-handler="CancelOrderAsContractor" type="submit" class="pull-left btn btn-danger">CANCEL ORDER</button>
-            }
-            <br />
-            @if (customerClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered && userIDMatchesOrderCreatorID)
-            {
-                <button asp-page-handler="DeleteOrderAsCustomer" type="submit" class="pull-left btn btn-danger">DELETE ORDER</button>
-            }
-        </form>
+        </div>
     </div>
+    @if (Model.GoogleRoute.rows[0].elements[0].status.Equals("OK"))
+    {
+        <br />
+        <label class="what">Distance (offered by Google Maps API): <span class="info"> @Model.GoogleRoute.rows[0].elements[0].distance.text </span></label>
+        <br />
+        <label class="what">Duration  (offered by Google Maps API): <span class="info"> @Model.GoogleRoute.rows[0].elements[0].duration.text </span></label>
+        <br />
+        <label class="what">Status (if this status is not OK calculate distance yourself using GoogleMaps): <span class="info"> @Model.GoogleRoute.rows[0].elements[0].status </span></label>
+    }
+        <div class="text-center">
+            <br />
+            <br />
+            <label class="what">Customer Company ID: <span class="info"> @Model.Order.companyID </span> </label>
+            <br />
+            <label class="what">OrderNumber:<span class="info"> @Model.Order.orderNumber  </span> </label>
+            <br />
+
+            <label class="what">Content Description:<span class="info"> @Model.Order.contentDescription  </span> </label>
+            <br />
+            <label class="what">ContainerSize: <span class="info"> @Model.Order.containerSize </span> </label>
+            <br />
+            <label class="what">Weight: <span class="info"> @Model.Order.weight </span> </label>
+            <br />
+            <label class="what">Price: <span class="info"> @Model.Order.price </span> </label>
+            <br />
+            <label class="what">Size: <span class="info"> @Model.Order.size </span> </label>
+            <br />
+            <label class="what">Late delivery: <span class="info"> @Model.Order.lateDelivery </span> </label>
+
+
+            <form asp-page="OrderDetails" method="post">
+                @if (contractorClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered)
+                {
+                    <button asp-page-handler="TakeOrder" type="submit" class=" btn btn-primary">Take Order</button>
+                }
+                <br />
+                @if (contractorClient && (orderAwaitingPickUp || orderPickedUp))
+                {
+                    <button asp-page-handler="LateOrder" type="submit" class=" btn btn-danger">ALERT ABOUT LATE DELIVERY</button>
+                }
+                <br />
+                @if (contractorClient && orderAwaitingPickUp)
+                {
+                    <button asp-page-handler="PickedUp" type="submit" class=" btn btn-danger">I Picked UP The Order</button>
+                }
+                <br />
+                @if (contractorClient && orderPickedUp)
+                {
+                    <button asp-page-handler="Delivered" type="submit" class=" btn btn-danger">I Delivered The Order</button>
+                }
+                <br />
+                @if (contractorClient && (orderAwaitingPickUp || orderPickedUp) && pickupDeadlineNotPassed)
+                {
+                    <button asp-page-handler="CancelOrderAsContractor" type="submit" class="pull-left btn btn-danger">CANCEL ORDER</button>
+                }
+                <br />
+                @if (customerClient && !orderAwaitingPickUp && !orderPickedUp && orderNotDelivered && userIDMatchesOrderCreatorID)
+                {
+                    <button asp-page-handler="DeleteOrderAsCustomer" type="submit" class=" btn btn-danger">DELETE ORDER</button>
+                }
+            </form>
+        </div>
+</div>
