@@ -25,7 +25,6 @@ namespace Client_Customer.Pages
         /// </summary>
         public void OnGet()
         {
-            string currentUserID = null;
 
             UpdateUserClaimsFromIdentityServer4();
 
